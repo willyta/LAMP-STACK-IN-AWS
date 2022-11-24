@@ -6,7 +6,7 @@ In order to complete this project, you will need an AWS account and a virtual se
 
 ## STEP 1 - HOW TO INSTALL APACHE AND UPDATE THE FIREWALL
 Update a list of packages in package manager
-    `sudo apt update`
+`sudo apt update`
 
 Run apache2 package installation
     `sudo apt install apache2 -y`
