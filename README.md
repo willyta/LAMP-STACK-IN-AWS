@@ -66,7 +66,7 @@ create and open a new configuration file in Apache’s sites-available directory
     `sudo vi /etc/apache2/sites-available/projectlamp.conf`
 
 Paste in the following bare-bones configuration
-    ```
+ ```
     <VirtualHost *:80>
         ServerName projectlamp
         ServerAlias www.projectlamp
@@ -75,7 +75,7 @@ Paste in the following bare-bones configuration
         ErrorLog ${APACHE_LOG_DIR}/error.log
         CustomLog ${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
-    ```
+  ```
 save and close the file
 
 show the new file in the sites-available directory
