@@ -9,7 +9,8 @@ Update a list of packages in package manager
 `sudo apt update`
 
 Run apache2 package installation
-    `sudo apt install apache2 -y`
+
+`sudo apt install apache2 -y`
 
 verify that apache2 is running as a Service
     `sudo systemctl status apache2`
@@ -27,19 +28,22 @@ From the browser, check if Apache HTTP server respond to requests from the Inter
 
 ## STEP 2 — INSTALLING MYSQL
 Install Mysql on the ubuntu server
-    `sudo apt install mysql-server -y`
+
+`sudo apt install mysql-server -y`
 
 Login to the MySQL
-    `sudo mysql`
+`sudo mysql`
 
 set a password for the root user, using mysql_native_password as default authentication method
-    `ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';`
+
+`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'PassWord.1';`
 
 Exit the MySQL shell
     `exit`
 
 Start the interactive script by running
-    `sudo mysql_secure_installation`
+
+`sudo mysql_secure_installation`
 Note: This will ask if you want to configure the VALIDATE PASSWORD PLUGIN. You would need to set a strong, unique passwords for database credentials.
 For the rest of the questions, press Y and hit the ENTER key at each prompt.
 
@@ -50,20 +54,25 @@ Exit the MySQL console with `exit`
 
 ## STEP 3 - INSTALLING PHP
 Install these 3 packages
-    `sudo apt install php libapache2-mod-php php-mysql`
+
+`sudo apt install php libapache2-mod-php php-mysql`
+
 confirm your PHP version
     `php -v`
     ![Php version](./Pictures/php_v.JPG)
 
 ## STEP 4 — CREATING A VIRTUAL HOST FOR YOUR WEBSITE USING APACHE
 Create the directory for projectlamp
-    `sudo mkdir /var/www/projectlamp`
+
+`sudo mkdir /var/www/projectlamp`
 
 Assign ownership of the directory with your urrent system user
-    `sudo chown -R $USER:$USER /var/www/projectlamp`
+
+`sudo chown -R $USER:$USER /var/www/projectlamp`
 
 create and open a new configuration file in Apache’s sites-available directory
-    `sudo vi /etc/apache2/sites-available/projectlamp.conf`
+
+`sudo vi /etc/apache2/sites-available/projectlamp.conf`
 
 Paste in the following bare-bones configuration
  ```
@@ -95,27 +104,31 @@ reload Apache
 
 Create an index.html file in that location so that we can test that the virtual host works
 
-    ```
-    sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
-    ```
+```
+sudo echo 'Hello LAMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectlamp/index.html
+```
 go to your browser and try to open your website URL using IP address
     `http://<Public-IP-Address>:80`
     ![Homepage index.html](./Pictures/php_domain.JPG)
 
 ## STEP 5 — ENABLE PHP ON THE WEBSITE
 edit the `/etc/apache2/mods-enabled/dir.conf` file and change the order in which the `index.php` file is listed within the DirectoryIndex directive
-    `sudo vim /etc/apache2/mods-enabled/dir.conf`
-    ```
-    <IfModule mod_dir.c>
-        #Change this:
-    
-        #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
-    
-        #To this:
-    
-        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
-    </IfModule>
-    ```
+
+`sudo vim /etc/apache2/mods-enabled/dir.conf`
+
+```
+<IfModule mod_dir.c>
+
+    #Change this:
+
+    #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
+
+    #To this:
+
+    DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+
+</IfModule>  
+```
 save and close the file. Reload apache
     `sudo systemctl reload apache2`
 Create a new file named index.php inside the projectlamp root folder:
